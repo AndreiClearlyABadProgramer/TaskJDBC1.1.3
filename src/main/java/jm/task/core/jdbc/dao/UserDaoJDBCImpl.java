@@ -22,7 +22,7 @@ public class UserDaoJDBCImpl implements UserDao {
         Util util = new Util();
         try {
             Statement statement = util.getConnection().createStatement();
-            statement.execute("CREATE TABLE Users (id BIGINT , name varchar(45), lastName varchar(45), age tinyint );");
+            statement.execute("CREATE TABLE Users (id BIGINT NOT NULL AUTO_INCREMENT, name varchar(45), lastName varchar(45), age tinyint, PRIMARY KEY(id));");
         } catch (SQLException e) {
             System.out.println("Скорее всего, такая таблица уже создана");
         }
