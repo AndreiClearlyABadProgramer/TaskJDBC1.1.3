@@ -7,6 +7,8 @@ import javax.persistence.Table;
 @Table
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
     private Long id;
 
     @Column
