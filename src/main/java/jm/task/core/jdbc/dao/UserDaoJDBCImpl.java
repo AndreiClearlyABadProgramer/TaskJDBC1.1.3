@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    private static final String INSERTION= "INSERT INTO Users VALUES(?,?,?,?)";
+    private static final String INSERTION= "INSERT INTO Users (name, lastName, age) VALUES(?,?,?)";
     private static final String ID_REMOVAL = "DELETE FROM Users WHERE id=?";
     public UserDaoJDBCImpl() {
 
@@ -44,23 +44,12 @@ public class UserDaoJDBCImpl implements UserDao {
         Util util = new Util();
         User user = new User(name, lastName, age);
         System.out.println("User с именем – " + name + " добавлен в базу данных");
-        try{
-            Statement statement = util.getConnection().createStatement();
-            ResultSet resultSet = statement.executeQuery("select count(*) from Users");
-            resultSet.next();
-            long count = resultSet.getInt("count(*)");
-            user.setId(count + 1);
-            util.close();
-        } catch (SQLException e) {
-            System.out.println("Something went wrong while counting rows");
-        }
 
         try {
             PreparedStatement preparedStatement = util.getConnection().prepareStatement(INSERTION);
-            preparedStatement.setLong(1, user.getId());
-            preparedStatement.setString(2, name);
-            preparedStatement.setString(3, lastName);
-            preparedStatement.setByte(4, age);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, lastName);
+            preparedStatement.setByte(3, age);
             preparedStatement.execute();
             util.close();
         } catch (SQLException e) {
